@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { getAllAppointment } from "../../api";
 import moment from "moment";
-import TableDropdown from "../Dropdowns/TableDropdown.js";
+import TableDropdown from "../Dropdowns/DropdownAppointment";
 
 export default function CardTable({ color }) {
   const [allAppointment, setAllAppointment] = useState([]);

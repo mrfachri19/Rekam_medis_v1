@@ -1,24 +1,26 @@
 import React, { useState } from "react";
-import { register } from "../../api"
+import { registerPasien } from "../../api"
 import { useHistory } from "react-router-dom";
 
-export default function Register() {
+export default function RegisterPasien() {
   const [nama, setnama] = useState("")
+  const [username, setUsername] = useState("")
   const [email, setemail] = useState("")
   const [password, setpassword] = useState("")
   const history = useHistory()
   const Register = async (e) => {
     try {
       e.preventDefault();
-      const response = await register(
+      const response = await registerPasien(
         { 
+          username: username,
           nama: nama,
           email: email,
           password: password,
         }
       );
       setTimeout(() => {
-        history.push("/auth/login");
+        history.push("/auth/loginpasien");
       }, 2000);
       console.log(response);
     } catch (error) {
@@ -33,7 +35,7 @@ export default function Register() {
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-slate-200 border-0">
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <div className="text-slate-400 text-center mb-3 font-bold mt-8">
-                  <small>Sign up with credentials</small>
+                  <small>Sign up Pasien with credentials</small>
                 </div>
                 <form>
                   <div className="relative w-full mb-3">
@@ -48,6 +50,20 @@ export default function Register() {
                       className="border-0 px-3 py-3 placeholder-slate-300 text-slate-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Name"
                       onChange={(e) => setnama(e.target.value)}
+                    />
+                  </div>
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-slate-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Username
+                    </label>
+                    <input
+                      type="email"
+                      className="border-0 px-3 py-3 placeholder-slate-300 text-slate-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Name"
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                   </div>
 

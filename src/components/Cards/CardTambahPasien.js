@@ -17,7 +17,7 @@ export default function CardTable({ color }) {
   const [therapy, setTherapy] = useState("")
   const [bagian, setbagian] = useState("")
 
-  const history= useHistory()
+  const history = useHistory()
   const TambahPasien = async (e) => {
     try {
       e.preventDefault();
@@ -37,14 +37,15 @@ export default function CardTable({ color }) {
       );
       console.log(response)
       localStorage.setItem("idPasienRegis", response.data.data.id)
-      setTimeout(() => {
-        history.push("/admin/datapasien");
-      }, 2000);
-      console.log(response);
+      window.location.reload()
     } catch (error) {
       console.log(error)
     }
   };
+
+  const next = () => {
+    history.push("/admin/datapasien");
+  }
 
   return (
     <>
@@ -65,8 +66,25 @@ export default function CardTable({ color }) {
             >
               Tambah pasien
             </h3>
-
           </div>
+          <div className="flex flex-wrap items-center">
+
+            <h3
+              className={
+                "font-semibold text-lg " +
+                (color === "light" ? "text-slate-700" : "text-white")
+              }
+            >
+              Username pasien: { localStorage.getItem("idPasienRegis")}
+            </h3>
+          </div>
+          <button
+            className=" bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ml-auto"
+            type="button"
+            onClick={next}
+          >
+            Next {">"}
+          </button>
         </div>
       </div>
 

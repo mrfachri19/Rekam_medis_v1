@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 // components
 
 import FooterSmall from "../components/Footers/FooterSmall.js";
+import RegisterPasien from "../views/auth/RegisterPasien.js";
 
 export default function Auth() {
 
@@ -32,6 +33,7 @@ export default function Auth() {
               <Route path="/auth/login" exact component={Login} />
               <Route path="/auth/loginpasien" exact component={LoginPasien} />
               <Route path="/auth/register" exact component={Register} />
+              <Route path="/auth/registerpasien" exact component={RegisterPasien} />
               <Redirect from="/auth" to="/auth/login" />
             </Switch>
           </Suspense>

@@ -2,7 +2,7 @@ import React from "react";
 
 // components
 
-import CardTable from "../../components/Cards/CardTableHistoryPreception";
+import CardTable from "../../components/Cards/CardTambahRekammedis";
 
 export default function Tables() {
   return (

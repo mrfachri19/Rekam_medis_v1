@@ -23,6 +23,12 @@ const NotificationDropdown = ({ idPasien, namapasien, idAppointment }) => {
     localStorage.setItem("idappointment", idAppointment);
     history.push("/admin/tambahappointment");
   };
+  const rekammedis = () => {
+    localStorage.setItem("idpasien", idPasien);
+    localStorage.setItem("namapasien", namapasien);
+    localStorage.setItem("idappointment", idAppointment);
+    history.push("/admin/tambahrekammedis");
+  };
 
   return (
     <>
@@ -51,8 +57,35 @@ const NotificationDropdown = ({ idPasien, namapasien, idAppointment }) => {
           }
           onClick={appointment}
         >
-         Add Appointment
+          edit appointment
         </a>
+        <a
+          href="#pablo"
+          className={
+            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
+          }
+          onClick={rekammedis}
+        >
+          add rekammedis
+        </a>
+        {/* <a
+          href="#pablo"
+          className={
+            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
+          }
+          onClick={(e) => e.preventDefault()}
+        >
+          Delete
+        </a>
+        <a
+          href="#pablo"
+          className={
+            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
+          }
+          onClick={(e) => e.preventDefault()}
+        >
+         Cetak
+        </a> */}
       </div>
     </>
   );

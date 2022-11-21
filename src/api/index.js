@@ -29,17 +29,21 @@ const post = (api) => async (data, token) => {
   });
 };
 
-const patch = (api) => async (data, token) => {
-  return await axios.patch(fullURL(api), data, {
-    method: "PATCH",
-    body: JSON.stringify(data),
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Content-type": "application/json",
-      // Authorization: `Bearer ${CONFIG.token}`,
-      // 'apikey': process.env.REACT_APP_API_KEY
-    },
-  });
+const patch =  (api) => async (param = "", data) => {
+  try {
+    return await axios.patch(`${fullURL(api)}${param}`, data, {
+      method: "PATCH",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-type": "application/json",
+        // "X-Authorization": `bearer ${localStorage.getItem("acces_token")}`,
+        // Authorization: `bearer ${localStorage.getItem("token_apim")}`
+      }
+    }, { handleNetworkError }
+    );
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const get = (api) => async (param = "") => {
@@ -75,28 +79,27 @@ const get = (api) => async (param = "") => {
 //   ).catch((err) => {});
 // };
 
-// // export const socialMedia = post('social-media')
-// export const getUserList = get("users");
-// export const postUser = post("users");
-// // export const getUserScore = getWithSlug('users')
-// export const postRegisterAuth = post("users");
-
 export const getAllPasien = get("pasien");
 export const getAllDokter = get("dokter");
 export const getAllAppointment = get("appointment");
 export const getAppointmentByIdpasien = get("appointment");
 export const getAllObat = get("obat");
+export const getAllPreception = get("preception");
+
 
 // =============
 export const loginAuth = post("auth/login")
 export const loginPasien = post("authpasien/loginpasien")
+export const register = post("auth/register")
+export const registerPasien = post("authpasien/registerpasien")
 
 // =============
 export const addPasien = post("pasien/addPasien")
 export const addDokter = post("dokter/addDokter")
 export const addObat = post("obat/addObat")
 export const addAppointment = post("appointment/addAppointment")
-export const editAppointment = patch(`appointment/upadateAppointment/${localStorage.getItem("idappointment")}`)
+export const addPreception = post("preception/addPreception")
+export const editAppointment = patch(`appointment/upadateAppointment`)
 
 
 const API = {
@@ -110,7 +113,11 @@ const API = {
   getAppointmentByIdpasien,
   getAllObat,
   addObat,
-  editAppointment
+  editAppointment,
+  addPreception,
+  getAllPreception,
+  register,
+  registerPasien
 };
 
 export default API;

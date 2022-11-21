@@ -8,6 +8,7 @@ import Sidebar from "../components/Sidebar/Sidebar.js";
 import HeaderStats from "../components/Headers/HeaderStats.js";
 import FooterAdmin from "../components/Footers/FooterAdmin.js";
 import pageViewGa from "../config/pageViewGa.js";
+import CardSettings from "../components/Cards/CardSettings.js";
 
 export default function Admin() {
   const Dashboard = lazy(() => import('../views/admin/Dashboard.js'));
@@ -18,10 +19,11 @@ export default function Admin() {
   const TambahAppointment = lazy(() => import('../views/admin/TambahAppointment'));
   const TablesObat = lazy(() => import('../views/admin/TablesObat'));
   const TablesRekammedis = lazy(() => import('../views/admin/TablesRekamMedis.js'));
+  const TambahRekammedis = lazy(() => import('../views/admin/TambahRekammedis'));
   const TablesAppointment = lazy(() => import('../views/admin/TablesAppointent'));
   const TablesDokter = lazy(() => import('../views/admin/TablesDokter.js'));
   const TablesHistoryAppointment = lazy(() => import('../views/admin/TablesHistoryAppointment'));
-  const TablesHistorypreception = lazy(() => import('../views/admin/TablesHistoryAppointment'));
+  const TablesHistorypreception = lazy(() => import('../views/admin/TablesHistoryPreception'));
   const TambahObat = lazy(() => import('../views/admin/TambahObat'));
 
 
@@ -46,10 +48,12 @@ export default function Admin() {
               <Route path="/admin/dataobat" exact component={pageViewGa(TablesObat)} />
               <Route path="/admin/tambahobat" exact component={pageViewGa(TambahObat)} />
               <Route path="/admin/rekammedis" exact component={pageViewGa(TablesRekammedis)} />
+              <Route path="/admin/tambahrekammedis" exact component={pageViewGa(TambahRekammedis)} />
               <Route path="/admin/appointment" exact component={pageViewGa(TablesAppointment)} />
               <Route path="/admin/tambahappointment" exact component={pageViewGa(TambahAppointment)} />
               <Route path="/admin/history-appointment" exact component={pageViewGa(TablesHistoryAppointment)} />
               <Route path="/admin/histor-preception" exact component={pageViewGa(TablesHistorypreception)} />
+              <Route path="/admin/maps" exact component={pageViewGa(CardSettings)} />
               <Redirect from="/admin" to="/admin/dashboard" />
             </Switch>
           </Suspense>

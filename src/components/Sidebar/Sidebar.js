@@ -334,22 +334,22 @@ export default function Sidebar() {
                     <Link
                       className={
                         "text-xs uppercase py-3 font-bold block " +
-                        (window.location.href.indexOf("/admin/dataobat") !== -1
+                        (window.location.href.indexOf("/admin/maps") !== -1
                           ? "text-blue-500 hover:text-blue-600"
                           : "text-slate-700 hover:text-slate-500")
                       }
-                      to="/admin/dataobat"
+                      to="/admin/maps"
                     >
                       <i
                         className={
                           "fas fa-table mr-2 text-sm " +
-                          (window.location.href.indexOf("/admin/dataobat") !==
+                          (window.location.href.indexOf("/admin/maps") !==
                             -1
                             ? "opacity-75"
                             : "text-slate-300")
                         }
                       ></i>{" "}
-                      Medicine History
+                      Maps Poliklinik
                     </Link>
                   </li>
 
