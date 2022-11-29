@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { getAllPreception } from "../../api";
-import { Link } from "react-router-dom";
-
-// components
+import { getAllPreception, exportPdf } from "../../api";
+import { useHistory } from "react-router-dom" 
 
 import TableDropdown from "../Dropdowns/TableDropdown.js";
 
 export default function CardTable({ color }) {
+  const history = useHistory()
   const [allObat, setAllObat] = useState([])
   const [search, setSearch] = useState("")
+  const [id, setId] = useState(0)
   function obatAll() {
     getAllPreception(`/dataPreception?search=${search}`).then((res) => {
       console.log(res, "rekam medis")
@@ -18,10 +18,20 @@ export default function CardTable({ color }) {
       setAllObat(tempList)
     })
   }
-
   useEffect(() => {
     obatAll()
   }, [search])
+
+  function getExportPdf(id) {
+    exportPdf(`/${id}`).then((res) => {
+      console.log(res)
+      if (res.status === 200) {
+        window.location = res.data.pagination.url
+      }
+    
+    })
+  }
+
   return (
     <>
       <div
@@ -42,12 +52,6 @@ export default function CardTable({ color }) {
                 Laporan Rekam Medis
               </h3>
             </div>
-            <button
-              className=" bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ml-auto"
-              type="button"
-            >
-              Cetak PDF
-            </button>
           </div>
         </div>
         <div className="block w-full overflow-x-auto">
@@ -135,23 +139,32 @@ export default function CardTable({ color }) {
                         +(color === "light" ? "text-slate-600" : "text-white")
                       }
                     >
-                     {item.kode_rm}
+                      {item.kode_rm}
                     </span>
                   </th>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     {item.nama_pasien}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                   {item.keluhan}
+                    {item.keluhan}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     {item.diagnosis}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                   {item.therapy}
-                  </td>               
+                    {item.therapy}
+                  </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     {item.obat}
+                  </td>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    <button
+                      className=" bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ml-auto"
+                      type="button"
+                      onClick={() => getExportPdf(item.id)}
+                    >
+                      Cetak PDF
+                    </button>
                   </td>
                   {/* <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                     <TableDropdown />

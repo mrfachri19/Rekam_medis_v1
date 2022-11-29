@@ -85,6 +85,7 @@ export const getAllAppointment = get("appointment");
 export const getAppointmentByIdpasien = get("appointment");
 export const getAllObat = get("obat");
 export const getAllPreception = get("preception");
+export const exportPdf = get("preception/dataPreception");
 
 
 // =============
@@ -117,7 +118,8 @@ const API = {
   addPreception,
   getAllPreception,
   register,
-  registerPasien
+  registerPasien,
+  exportPdf
 };
 
 export default API;
