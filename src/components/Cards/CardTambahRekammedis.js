@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { addPreception } from "../../api";
 import { useHistory } from "react-router-dom";
-// components
-
+import { Messaege } from "../../helper/helper";
 export default function CardTable({ color }) {
-  const [kode_rm, setkode_rm] = useState("");
   const [keluhan, setkeluhan] = useState("");
   const [obat, setobat] = useState("");
   const [diagnosis, setdiagnosis] = useState("");
@@ -17,13 +15,14 @@ export default function CardTable({ color }) {
       e.preventDefault();
       const response = await addPreception({
         id_pasien: localStorage.getItem("idpasien"),
-        kode_rm: kode_rm,
+        kode_rm: "RM" + "-" + generateString(7),
         nama_pasien: localStorage.getItem("namapasien"),
         keluhan: keluhan,
         diagnosis: diagnosis,
         therapy: therapy,
         obat: obat,
       });
+      Messaege("Succes", "Success add data", "success");
       setTimeout(() => {
         history.push("/admin/rekammedis");
       }, 2000);
@@ -32,6 +31,13 @@ export default function CardTable({ color }) {
       console.log(error);
     }
   };
+
+  function generateString(length) {
+    const result = Math.random()
+      .toString(36)
+      .substring(2, length + 2);
+    return result;
+  }
 
   return (
     <>
@@ -58,23 +64,6 @@ export default function CardTable({ color }) {
       <div className="flex-auto px-4 lg:px-10 py-10 pt-0 mt-10 bg-slate-700">
         <form className="mt-9">
           <div className="block p-10">
-            <div className="w-full lg:w-6/12 px-4">
-              <div className="relative w-full mb-3">
-                <label
-                  className="block uppercase text-white text-xs font-bold mb-2"
-                  htmlFor="koderm"
-                >
-                 Kode RM
-                </label>
-                <input
-                  id="koderm"
-                  type="text"
-                  className="border-0 px-3 py-3 placeholder-slate-300 text-slate-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue=""
-                  onChange={(e) => setkode_rm(e.target.value)}
-                />
-              </div>
-            </div>
             <div className="w-full lg:w-6/12 px-4">
               <div className="relative w-full mb-3">
                 <label

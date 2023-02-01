@@ -30,6 +30,7 @@ export default function Sidebar() {
               className="h-12 align-center border-none"
             />
           </Link>
+          Rekam Medis APP
 
           {/* User */}
           <ul className="md:hidden items-center flex flex-wrap list-none">
@@ -112,28 +113,6 @@ export default function Sidebar() {
                       Dashboard
                     </Link>
                   </li>
-
-                  {/* <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/settings") !== -1
-                      ? "text-blue-500 hover:text-blue-600"
-                      : "text-slate-700 hover:text-slate-500")
-                  }
-                  to="/admin/settings"
-                >
-                  <i
-                    className={
-                      "fas fa-tools mr-2 text-sm " +
-                      (window.location.href.indexOf("/admin/settings") !== -1
-                        ? "opacity-75"
-                        : "text-slate-300")
-                    }
-                  ></i>{" "}
-                  Dashboard
-                </Link>
-              </li> */}
 
                   <li className="items-center">
                     <Link
@@ -267,6 +246,53 @@ export default function Sidebar() {
                 </h6>
 
                 <ul className="md:flex-col md:min-w-full flex flex-col list-none">
+
+                <li className="items-center">
+                    <Link
+                      className={
+                        "text-xs uppercase py-3 font-bold block " +
+                        (window.location.href.indexOf("/admin/dashboard") !== -1
+                          ? "text-blue-500 hover:text-blue-600"
+                          : "text-slate-700 hover:text-slate-500")
+                      }
+                      to="/admin/dashboard"
+                    >
+                      <i
+                        className={
+                          "fas fa-tv mr-2 text-sm " +
+                          (window.location.href.indexOf("/admin/dashboard") !==
+                            -1
+                            ? "opacity-75"
+                            : "text-slate-300")
+                        }
+                      ></i>{" "}
+                      Dashboard
+                    </Link>
+                  </li>
+
+                  <li className="items-center">
+                    <Link
+                      className={
+                        "text-xs uppercase py-3 font-bold block " +
+                        (window.location.href.indexOf("/admin/datapasien") !==
+                          -1
+                          ? "text-blue-500 hover:text-blue-600"
+                          : "text-slate-700 hover:text-slate-500")
+                      }
+                      to="/admin/datapasien"
+                    >
+                      <i
+                        className={
+                          "fas fa-table mr-2 text-sm " +
+                          (window.location.href.indexOf("/admin/datapasien") !==
+                            -1
+                            ? "opacity-75"
+                            : "text-slate-300")
+                        }
+                      ></i>{" "}
+                      Data Pasien
+                    </Link>
+                  </li>
                   <li className="items-center">
                     <Link
                       className={
@@ -290,6 +316,7 @@ export default function Sidebar() {
                       Laporan Rekam Medis
                     </Link>
                   </li>
+                  
                   <li className="items-center">
                     <Link
                       className={

@@ -18,6 +18,7 @@ export default function Admin() {
   const TambahDokter = lazy(() => import('../views/admin/TambahDokter'));
   const TambahAppointment = lazy(() => import('../views/admin/TambahAppointment'));
   const TablesObat = lazy(() => import('../views/admin/TablesObat'));
+  const TablesObatPDF = lazy(() => import('../components/Cards/CardTableObatPdf'));
   const TablesRekammedis = lazy(() => import('../views/admin/TablesRekamMedis.js'));
   const TambahRekammedis = lazy(() => import('../views/admin/TambahRekammedis'));
   const TablesAppointment = lazy(() => import('../views/admin/TablesAppointent'));
@@ -25,7 +26,7 @@ export default function Admin() {
   const TablesHistoryAppointment = lazy(() => import('../views/admin/TablesHistoryAppointment'));
   const TablesHistorypreception = lazy(() => import('../views/admin/TablesHistoryPreception'));
   const TambahObat = lazy(() => import('../views/admin/TambahObat'));
-
+  const EditObat = lazy(() => import('../views/admin/EditObat'));
 
   const renderLoader = () => <p>Loading</p>;
 
@@ -43,10 +44,15 @@ export default function Admin() {
               <Route path="/admin/settings" exact component={pageViewGa(Settings)} />
               <Route path="/admin/datapasien" exact component={pageViewGa(TablesPatient)} />
               <Route path="/admin/tambahpasien" exact component={pageViewGa(TambahPasien)} />
+              {/* dokter */}
               <Route path="/admin/datadokter" exact component={pageViewGa(TablesDokter)} />
               <Route path="/admin/tambahdokter" exact component={pageViewGa(TambahDokter)} />
+              {/* obat */}
               <Route path="/admin/dataobat" exact component={pageViewGa(TablesObat)} />
+              <Route path="/admin/dataobatpdf" exact component={pageViewGa(TablesObatPDF)} />
               <Route path="/admin/tambahobat" exact component={pageViewGa(TambahObat)} />
+              <Route path="/admin/editobat" exact component={pageViewGa(EditObat)} />
+              {/* rekammmedis */}
               <Route path="/admin/rekammedis" exact component={pageViewGa(TablesRekammedis)} />
               <Route path="/admin/tambahrekammedis" exact component={pageViewGa(TambahRekammedis)} />
               <Route path="/admin/appointment" exact component={pageViewGa(TablesAppointment)} />

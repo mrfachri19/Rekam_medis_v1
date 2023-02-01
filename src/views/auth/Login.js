@@ -1,27 +1,29 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { loginAuth } from "../../api";
+import { Messaege } from "../../helper/helper";
+
 export default function Login() {
-  const history = useHistory()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const history = useHistory();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const Login = async (e) => {
     try {
       e.preventDefault();
-      const response = await loginAuth(
-        {
-          email: email,
-          password: password,
-        }
-      );
-      localStorage.setItem("role", response.data.data.role)
-      localStorage.setItem("nama", response.data.data.name)
+      const response = await loginAuth({
+        email: email,
+        password: password,
+      });
+      localStorage.setItem("role", response.data.data.role);
+      localStorage.setItem("nama", response.data.data.name);
+      Messaege("Succes", "Success Login", "success");
       setTimeout(() => {
         history.push("/admin/dashboard");
       }, 2000);
       console.log(response);
     } catch (error) {
-     console.log(error)
+      console.log(error);
+      Messaege("Failed", `${error}`, "error");
     }
   };
 
@@ -100,17 +102,15 @@ export default function Login() {
             </div>
             <div className="flex flex-wrap mt-6 relative">
               <div className="w-1/2">
-                <a
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  className="text-black"
-                >
-                  <small>Forgot password?</small>
-                </a>
+                <Link to="/auth/registerpasien" className="text-black">
+                  <small className="text-xs">Create new account patient </small>
+                </Link>
               </div>
               <div className="w-1/2 text-right">
                 <Link to="/auth/register" className="text-black">
-                  <small>Create new account</small>
+                  <small className="text-xs">
+                    Create new account doctor or nurse
+                  </small>
                 </Link>
               </div>
             </div>

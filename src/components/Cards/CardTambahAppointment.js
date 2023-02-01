@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { addAppointment, editAppointment } from "../../api";
 import { useHistory } from "react-router-dom";
-import "../DatePicker/DatePicker.css"
+import "../DatePicker/DatePicker.css";
 // components
 import ReactDatePicker from "react-datepicker";
 import IconCalender from "../../assets/img/calendar-grey.svg";
 import moment from "moment";
+import { Messaege } from "../../helper/helper";
 
 export default function CardTable({ color }) {
-  const [kode_periksa, setkode_periksa] = useState("");
-  const [appointment, setappointment] = useState(localStorage.getItem("role") === "suster" ? new Date() : null);
+  const [appointment, setappointment] = useState(
+    localStorage.getItem("role") === "suster" ? new Date() : null
+  );
   const [ruangan, setRuangan] = useState("");
 
   const history = useHistory();
@@ -20,11 +22,12 @@ export default function CardTable({ color }) {
         e.preventDefault();
         const response = await addAppointment({
           id_pasien: localStorage.getItem("idpasien"),
-          kode_periksa: kode_periksa,
+          kode_periksa: "KOPE" + "-" + generateString(7),
           appointment: moment(appointment).format("YYYY-MM-DD"),
           ruangan: ruangan,
           nama_pasien: localStorage.getItem("namapasien"),
         });
+        Messaege("Succes", "Success add data", "success");
         setTimeout(() => {
           history.push("/admin/appointment");
         }, 2000);
@@ -36,15 +39,16 @@ export default function CardTable({ color }) {
       try {
         e.preventDefault();
         let data = {
-
           id_pasien: localStorage.getItem("idpasien"),
-          kode_periksa: kode_periksa,
           appointment: moment(appointment).format("YYYY-MM-DD"),
           ruangan: ruangan,
           nama_pasien: localStorage.getItem("namapasien"),
-
-        }
-        const response = await editAppointment( `/${localStorage.getItem("idappointment")}`, data);
+        };
+        const response = await editAppointment(
+          `/${localStorage.getItem("idappointment")}`,
+          data
+        );
+        Messaege("Succes", "Success edit data", "success");
         setTimeout(() => {
           history.push("/admin/appointment");
         }, 2000);
@@ -53,9 +57,13 @@ export default function CardTable({ color }) {
         console.log(error);
       }
     }
-
   };
-
+  function generateString(length) {
+    const result = Math.random()
+      .toString(36)
+      .substring(2, length + 2);
+    return result;
+  }
   return (
     <>
       <div
@@ -72,7 +80,10 @@ export default function CardTable({ color }) {
                 (color === "light" ? "text-slate-700" : "text-white")
               }
             >
-              Tambah Appointment
+              {" "}
+              {localStorage.getItem("role") === "dokter"
+                ? "Edit Appointment"
+                : "Tambah Appointment"}
             </h3>
           </div>
         </div>
@@ -81,23 +92,6 @@ export default function CardTable({ color }) {
       <div className="flex-auto px-4 lg:px-10 py-10 pt-0 mt-10 bg-slate-700">
         <form className="mt-9">
           <div className="block p-10">
-            <div className="w-full lg:w-6/12 px-4">
-              <div className="relative w-full mb-3">
-                <label
-                  className="block uppercase text-white text-xs font-bold mb-2"
-                  htmlFor="koderm"
-                >
-                  Kode Periksa
-                </label>
-                <input
-                  id="koderm"
-                  type="text"
-                  className="border-0 px-3 py-3 placeholder-slate-300 text-slate-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue=""
-                  onChange={(e) => setkode_periksa(e.target.value)}
-                />
-              </div>
-            </div>
             <div className="w-full lg:w-6/12 px-4">
               <div className="relative w-full mb-3">
                 <label
@@ -122,7 +116,11 @@ export default function CardTable({ color }) {
                           </div>
                           <div className="absolute inset-y-0 right-0 flex items-center px-3 border rounded bg-tertiary-20">
                             <span className="text-gray-500 sm:text-sm">
-                              <img alt="..." className="w-5" src={IconCalender} />
+                              <img
+                                alt="..."
+                                className="w-5"
+                                src={IconCalender}
+                              />
                             </span>
                           </div>
                         </div>
@@ -171,7 +169,9 @@ export default function CardTable({ color }) {
               type="button"
               onClick={TambahAppointment}
             >
-              {localStorage.getItem("role") === "suster" ? "add Appointment" : "edit Appointment"}
+              {localStorage.getItem("role") === "suster"
+                ? "add Appointment"
+                : "edit Appointment"}
             </button>
           </div>
         </form>

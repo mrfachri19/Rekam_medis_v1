@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom"
-import { getAllPasien } from "../../api"
+import { Link } from "react-router-dom";
+import { getAllPasien } from "../../api";
 // components
 import TableDropdown from "../Dropdowns/TableDropdown.js";
 
 export default function CardTable({ color }) {
-  const [allPasien, setAllpasien] = useState([])
-  const [search, setSearch] = useState("")
+  const [allPasien, setAllpasien] = useState([]);
+  const [search, setSearch] = useState("");
   function pasienAll() {
     getAllPasien(`/dataPasien?search=${search}`).then((res) => {
-      console.log(res.data.data, "all pasien")
+      console.log(res.data.data, "all pasien");
       var tempList = [];
-      tempList = res.data.data
-      setAllpasien(tempList)
-    })
+      tempList = res.data.data;
+      setAllpasien(tempList);
+    });
   }
 
   useEffect(() => {
-    pasienAll()
-  }, [search])
+    pasienAll();
+  }, [search]);
   return (
     <>
       <div
@@ -77,7 +77,17 @@ export default function CardTable({ color }) {
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
                 >
-                  Kode RM
+                  No
+                </th>
+                <th
+                  className={
+                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                    (color === "light"
+                      ? "bg-slate-50 text-slate-500 border-slate-100"
+                      : "bg-blue-800 text-blue-300 border-blue-700")
+                  }
+                >
+                  Kode Pasien
                 </th>
                 <th
                   className={
@@ -100,7 +110,6 @@ export default function CardTable({ color }) {
                   Jenis Kelamin
                 </th>
 
-
                 <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
@@ -121,16 +130,7 @@ export default function CardTable({ color }) {
                 >
                   Alamat
                 </th>
-                <th
-                  className={
-                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                    (color === "light"
-                      ? "bg-slate-50 text-slate-500 border-slate-100"
-                      : "bg-blue-800 text-blue-300 border-blue-700")
-                  }
-                >
-                  Pengobatan
-                </th>
+
                 <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
@@ -152,16 +152,7 @@ export default function CardTable({ color }) {
                 >
                   Diagnosa
                 </th>
-                <th
-                  className={
-                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                    (color === "light"
-                      ? "bg-slate-50 text-slate-500 border-slate-100"
-                      : "bg-blue-800 text-blue-300 border-blue-700")
-                  }
-                >
-                  Therapy
-                </th>
+
                 <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
@@ -185,6 +176,9 @@ export default function CardTable({ color }) {
             <tbody>
               {allPasien.map((item, index) => (
                 <tr key={index}>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    {index + 1}
+                  </td>
                   <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                     <span
                       className={
@@ -208,29 +202,24 @@ export default function CardTable({ color }) {
                     {item.alamat}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {item.pengobatan}
-                  </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     {item.td}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     {item.diagnosa}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {item.therapy}
-                  </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     {item.bagian}
                   </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                    <TableDropdown
-                      namapasien={item.nama_pasien}
-                      idPasien={item.id}
-                    />
-                  </td>
+                  {localStorage.getItem("role") === "suster" && (
+                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                      <TableDropdown
+                        namapasien={item.nama_pasien}
+                        idPasien={item.id}
+                      />
+                    </td>
+                  )}
                 </tr>
               ))}
-
             </tbody>
           </table>
         </div>

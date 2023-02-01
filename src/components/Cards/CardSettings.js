@@ -19,7 +19,7 @@ export default function CardSettings() {
         </div>
         <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
           <div className={"mt-4"}>
-            <iframe title='STIE Mahardika' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15829.187376755455!2d112.72354862657848!3d-7.320515015468321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb6e5d46a71f%3A0xcee5826bf72578a8!2sSTIE%20Mahardika!5e0!3m2!1sid!2sid!4v1667284089526!5m2!1sid!2sid" className={"w-full h-64"}
+            <iframe title='STIE Mahardika' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.951395788114!2d106.84287581455511!3d-6.2701225954616735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f26c7bf4e5fd%3A0x52ec054280886588!2sDitjen%20Bina%20Pemerintahan%20Desa!5e0!3m2!1sid!2sid!4v1672060722230!5m2!1sid!2sid" className={"w-full h-64"}
               style={{ border: 0 }}
               allowFullScreen=""
               loading="lazy"

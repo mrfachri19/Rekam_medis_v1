@@ -1,36 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { getAllPreception, exportPdf } from "../../api";
-import { useHistory } from "react-router-dom" 
-
+import { useHistory } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
 import TableDropdown from "../Dropdowns/TableDropdown.js";
 
 export default function CardTable({ color }) {
-  const history = useHistory()
-  const [allObat, setAllObat] = useState([])
-  const [search, setSearch] = useState("")
-  const [id, setId] = useState(0)
+  const history = useHistory();
+  const [allObat, setAllObat] = useState([]);
+  const [search, setSearch] = useState("");
+  const [id, setId] = useState(0);
   function obatAll() {
     getAllPreception(`/dataPreception?search=${search}`).then((res) => {
-      console.log(res, "rekam medis")
+      console.log(res, "rekam medis");
       var tempList = [];
-      tempList = res.data.data
-      setAllObat(tempList)
-    })
+      tempList = res.data.data;
+      setAllObat(tempList);
+    });
   }
   useEffect(() => {
-    obatAll()
-  }, [search])
+    obatAll();
+  }, [search]);
 
   function getExportPdf(id) {
     exportPdf(`/${id}`).then((res) => {
-      console.log(res)
+      console.log(res);
       if (res.status === 200) {
-        window.location = res.data.pagination.url
+        window.location = res.data.pagination.url;
       }
-    
-    })
+    });
   }
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   return (
     <>
@@ -53,8 +57,15 @@ export default function CardTable({ color }) {
               </h3>
             </div>
           </div>
+          <button
+            className="mt-5 bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ml-auto"
+            type="button"
+            onClick={handlePrint}
+          >
+            Cetak Pdf
+          </button>
         </div>
-        <div className="block w-full overflow-x-auto">
+        <div className="block w-full overflow-x-auto" ref={componentRef}>
           {/* Projects table */}
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
@@ -119,14 +130,14 @@ export default function CardTable({ color }) {
                 >
                   Penggunaan obat
                 </th>
-                <th
+                {/* <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                     (color === "light"
                       ? "bg-slate-50 text-slate-500 border-slate-100"
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
-                ></th>
+                ></th> */}
               </tr>
             </thead>
             <tbody>
@@ -157,7 +168,7 @@ export default function CardTable({ color }) {
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     {item.obat}
                   </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  {/* <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     <button
                       className=" bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ml-auto"
                       type="button"
@@ -165,7 +176,7 @@ export default function CardTable({ color }) {
                     >
                       Cetak PDF
                     </button>
-                  </td>
+                  </td> */}
                   {/* <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                     <TableDropdown />
                   </td> */}

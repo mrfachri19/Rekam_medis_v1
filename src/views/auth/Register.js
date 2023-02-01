@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 export default function Register() {
   const [nama, setnama] = useState("")
   const [email, setemail] = useState("")
+  const [role, setRole] = useState("")
   const [password, setpassword] = useState("")
   const history = useHistory()
   const Register = async (e) => {
@@ -14,6 +15,7 @@ export default function Register() {
         { 
           nama: nama,
           email: email,
+          role: role,
           password: password,
         }
       );
@@ -38,7 +40,7 @@ export default function Register() {
                 <form>
                   <div className="relative w-full mb-3">
                     <label
-                      className="block uppercase text-slate-600 text-xs font-bold mb-2"
+                      className="block text-slate-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
                       Name
@@ -53,7 +55,22 @@ export default function Register() {
 
                   <div className="relative w-full mb-3">
                     <label
-                      className="block uppercase text-slate-600 text-xs font-bold mb-2"
+                      className="block text-slate-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Pilih Role Suster atau Dokter
+                    </label>
+                    <input
+                      type="role"
+                      className="border-0 px-3 py-3 placeholder-slate-300 text-slate-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Select role suster atau dokter"
+                      onChange={(e) => setRole(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block text-slate-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
                       Email
@@ -68,7 +85,7 @@ export default function Register() {
 
                   <div className="relative w-full mb-3">
                     <label
-                      className="block uppercase text-slate-600 text-xs font-bold mb-2"
+                      className="block text-slate-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
                       Password

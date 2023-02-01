@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { getAllObat } from "../../api";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 export default function CardTable({ color }) {
   const [allObat, setAllObat] = useState([]);
@@ -19,11 +19,10 @@ export default function CardTable({ color }) {
     obatAll();
   }, [search]);
 
-  const history = useHistory()
   const componentRef = useRef();
-  const handlePrint = () => {
-    history.push("/admin/dataobatpdf")
-  }
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   return (
     <>
       <div
@@ -44,19 +43,7 @@ export default function CardTable({ color }) {
                 Laporan Obat
               </h3>
             </div>
-            <form className="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
-              <div className="relative flex w-full flex-wrap items-stretch">
-                <span className="z-10 h-full leading-snug font-normal absolute text-center text-slate-300 bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
-                  <i className="fas fa-search"></i>
-                </span>
-                <input
-                  type="text"
-                  placeholder="Search Obat..."
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="border-0 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
-                />
-              </div>
-            </form>
+     
             <button
               className=" bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ml-auto"
               type="button"
@@ -64,14 +51,7 @@ export default function CardTable({ color }) {
             >
               Cetak Pdf
             </button>
-            <Link to="/admin/tambahobat">
-              <button
-                className=" bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ml-auto"
-                type="button"
-              >
-                Tambah Obat
-              </button>
-            </Link>
+     
           </div>
         </div>
         <div className="block w-full overflow-x-auto">
@@ -86,8 +66,8 @@ export default function CardTable({ color }) {
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                     (color === "light"
-                      ? "bg-slate-50 text-slate-500 border-slate-100"
-                      : "bg-blue-800 text-blue-300 border-blue-700")
+                    ? "bg-slate-50 text-slate-500 "
+                    : "bg-blue-800 text-blue-300 border-blue-700")
                   }
                 >
                   Nama Obat
@@ -96,8 +76,8 @@ export default function CardTable({ color }) {
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                     (color === "light"
-                      ? "bg-slate-50 text-slate-500 border-slate-100"
-                      : "bg-blue-800 text-blue-300 border-blue-700")
+                    ? "bg-slate-50 text-slate-500 "
+                    : "bg-blue-800 text-blue-300 border-blue-700")
                   }
                 >
                   Stock
@@ -106,21 +86,13 @@ export default function CardTable({ color }) {
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                     (color === "light"
-                      ? "bg-slate-50 text-slate-500 border-slate-100"
+                      ? "bg-slate-50 text-slate-500 "
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
                 >
                   Kategori Obat
                 </th>
 
-                <th
-                  className={
-                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                    (color === "light"
-                      ? "bg-slate-50 text-slate-500 border-slate-100"
-                      : "bg-blue-800 text-blue-300 border-blue-700")
-                  }
-                ></th>
               </tr>
             </thead>
             <tbody>
@@ -143,17 +115,7 @@ export default function CardTable({ color }) {
                     {/* <i className="fas fa-circle text-teal-500 mr-2"></i> on */}
                     {item.category}
                   </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                    <Link to="/admin/editobat">
-                      <button
-                        className=" bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ml-auto"
-                        type="button"
-                        onClick={() => localStorage.setItem("IdObat", item.id)}
-                      >
-                        Edit Obat
-                      </button>
-                    </Link>
-                  </td>
+            
                 </tr>
               ))}
             </tbody>

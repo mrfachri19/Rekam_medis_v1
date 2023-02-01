@@ -22,7 +22,10 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "5.0.0",
     "react-service-worker": "^0.1.1",
+    "react-to-print": "^2.14.10",
+    "react-dropdown-select": "^4.9.0",
     "serve": "^13.0.2",
+    "sweetalert2": "^11.6.16",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

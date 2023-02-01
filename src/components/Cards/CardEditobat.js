@@ -1,32 +1,30 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { addObat } from "../../api";
+import { updateObat } from "../../api";
 import { useHistory } from "react-router-dom";
-import { Messaege } from "../../helper/helper";
+// components
+
 export default function CardTable({ color }) {
   const [nama_obat, setnama_obat] = useState("");
   const [stok, setStok] = useState("");
-  const [harga, setharga] = useState("");
+  const [category, setCategory] = useState("");
 
   const history = useHistory();
   const TambahObat = async (e) => {
-    if (nama_obat === "" || stok === "" || harga === "") {
-      Messaege("Failed", `please filled data complately`, "error");
-    } else {
-      try {
-        e.preventDefault();
-        const response = await addObat({
-          nama_obat: nama_obat,
-          stok: stok,
-          category: harga,
-        });
-        setTimeout(() => {
-          history.push("/admin/dataObat");
-        }, 2000);
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      e.preventDefault();
+      let data = {
+        nama_obat: nama_obat,
+        stok: stok,
+        category: category,
+      };
+      const response = await updateObat(`/${localStorage.getItem("IdObat")}`, data);
+      setTimeout(() => {
+        history.push("/admin/dataObat");
+      }, 2000);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -46,7 +44,7 @@ export default function CardTable({ color }) {
                 (color === "light" ? "text-slate-700" : "text-white")
               }
             >
-              Tambah Obat
+              Edit Obat
             </h3>
           </div>
         </div>
@@ -67,7 +65,7 @@ export default function CardTable({ color }) {
                   id="koderm"
                   type="text"
                   className="border-0 px-3 py-3 placeholder-slate-300 text-slate-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue=""
+                  defaultValue={nama_obat}
                   onChange={(e) => setnama_obat(e.target.value)}
                 />
               </div>
@@ -84,7 +82,7 @@ export default function CardTable({ color }) {
                   id="nama"
                   type="nama"
                   className="border-0 px-3 py-3 placeholder-slate-300 text-slate-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue=""
+                  defaultValue={stok}
                   onChange={(e) => setStok(e.target.value)}
                 />
               </div>
@@ -101,8 +99,8 @@ export default function CardTable({ color }) {
                   id="nama"
                   type="nama"
                   className="border-0 px-3 py-3 placeholder-slate-300 text-slate-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue=""
-                  onChange={(e) => setharga(e.target.value)}
+                  defaultValue={category}
+                  onChange={(e) => setCategory(e.target.value)}
                 />
               </div>
             </div>
@@ -111,7 +109,7 @@ export default function CardTable({ color }) {
               type="button"
               onClick={TambahObat}
             >
-              Tambah
+              edit obat
             </button>
           </div>
         </form>

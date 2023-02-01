@@ -1,25 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { getAllAppointment } from "../../api";
-import moment from "moment";
-import TableDropdown from "../Dropdowns/DropdownAppointment";
-import TableDropdownappointment from "../Dropdowns/TableDropdown";
+import { getAllPreception, exportPdf } from "../../api";
+import { useHistory } from "react-router-dom" 
+
+import TableDropdown from "../Dropdowns/TableDropdown.js";
 
 export default function CardTable({ color }) {
-  const [allAppointment, setAllAppointment] = useState([]);
-  const [search, setSearch] = useState("");
-  function appointmentAll() {
-    getAllAppointment(`/dataAppointment?search=${search}`).then((res) => {
-      console.log(res.data.data, "all appointment");
+  const history = useHistory()
+  const [allObat, setAllObat] = useState([])
+  const [search, setSearch] = useState("")
+  const [id, setId] = useState(0)
+  function obatAll() {
+    getAllPreception(`/dataPreception?search=${search}`).then((res) => {
+      console.log(res, "rekam medis")
       var tempList = [];
-      tempList = res.data.data;
-      setAllAppointment(tempList);
-    });
+      tempList = res.data.data
+      setAllObat(tempList)
+    })
   }
-
   useEffect(() => {
-    appointmentAll();
-  }, [search]);
+    obatAll()
+  }, [search])
+
+  function getExportPdf(id) {
+    exportPdf(`/${id}`).then((res) => {
+      console.log(res)
+      if (res.status === 200) {
+        window.location = res.data.pagination.url
+      }
+    
+    })
+  }
 
   return (
     <>
@@ -38,21 +49,9 @@ export default function CardTable({ color }) {
                   (color === "light" ? "text-slate-700" : "text-white")
                 }
               >
-                Appointment
+                Laporan Rekam Medis
               </h3>
             </div>
-            {/* <button
-              className=" bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ml-auto"
-              type="button"
-            >
-              Cetak PDF
-            </button> */}
-            {/* <button
-              className=" bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ml-auto"
-              type="button"
-            >
-              Edit Appointment
-            </button> */}
           </div>
         </div>
         <div className="block w-full overflow-x-auto">
@@ -68,7 +67,7 @@ export default function CardTable({ color }) {
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
                 >
-                  NO
+                  Kode RM
                 </th>
                 <th
                   className={
@@ -78,7 +77,7 @@ export default function CardTable({ color }) {
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
                 >
-                  Appointment
+                  Nama
                 </th>
                 <th
                   className={
@@ -88,7 +87,7 @@ export default function CardTable({ color }) {
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
                 >
-                  Kode Periksa
+                  Keluhan
                 </th>
                 <th
                   className={
@@ -98,7 +97,7 @@ export default function CardTable({ color }) {
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
                 >
-                  Ruangan
+                  Diagnosis
                 </th>
                 <th
                   className={
@@ -108,9 +107,18 @@ export default function CardTable({ color }) {
                       : "bg-blue-800 text-blue-300 border-blue-700")
                   }
                 >
-                  Nama Pasien
+                  Tindakan
                 </th>
-
+                <th
+                  className={
+                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                    (color === "light"
+                      ? "bg-slate-50 text-slate-500 border-slate-100"
+                      : "bg-blue-800 text-blue-300 border-blue-700")
+                  }
+                >
+                Harga
+                </th>
                 <th
                   className={
                     "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
@@ -122,11 +130,8 @@ export default function CardTable({ color }) {
               </tr>
             </thead>
             <tbody>
-              {allAppointment.map((item, index) => (
+              {allObat.map((item, index) => (
                 <tr key={index}>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {index + 1}
-                  </td>
                   <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                     <span
                       className={
@@ -134,29 +139,36 @@ export default function CardTable({ color }) {
                         +(color === "light" ? "text-slate-600" : "text-white")
                       }
                     >
-                      {moment(item.appointment).format("YYYY-MM-DD")}
+                      {item.kode_rm}
                     </span>
                   </th>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {item.kode_periksa}
-                  </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {item.ruangan}
-                  </td>
-                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     {item.nama_pasien}
                   </td>
-                  {localStorage.getItem("role") === "suster" ? (
-                    <></>
-                  ) : (
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                      <TableDropdown
-                        namapasien={item.nama_pasien}
-                        idPasien={item.id_pasien}
-                        idAppointment={item.id}
-                      />
-                    </td>
-                  )}
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    {item.keluhan}
+                  </td>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    {item.diagnosis}
+                  </td>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    {item.therapy}
+                  </td>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    Rp. {item.obat}
+                  </td>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    <button
+                      className=" bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 ml-auto"
+                      type="button"
+                      onClick={() => getExportPdf(item.id)}
+                    >
+                      Cetak PDF
+                    </button>
+                  </td>
+                  {/* <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                    <TableDropdown />
+                  </td> */}
                 </tr>
               ))}
             </tbody>
